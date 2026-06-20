@@ -1079,6 +1079,11 @@ class Game:
             if not user_input:
                 continue
 
+            # Limit input length to prevent buffer issues
+            if len(user_input) > 10:
+                print(f"  {self._('invalid_coord')}")
+                continue
+
             # Check for commands
             result = self._handle_game_commands(user_input)
             if result == "quit":
@@ -1113,6 +1118,9 @@ class Game:
         except (EOFError, KeyboardInterrupt):
             name_input = ""
 
+        # Limit name length to prevent display issues
+        if name_input:
+            name_input = name_input[:20]
         player_name = name_input if name_input else self._("player_name")
 
         # Save score
